@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PromoCodeFactory.Core.Domain.Administration;
 using PromoCodeFactory.Core.Domain.PromoCodeManagement;
+using PromoCodeFactory.DataAccess.Data;
 using System.Reflection;
 
 namespace PromoCodeFactory.DataAccess;
@@ -35,6 +36,8 @@ public class PromoCodeDbContext(DbContextOptions options) : DbContext(options)
             builder.HasOne(x => x.Role)
                 .WithMany()
                 .HasForeignKey(x => x.RoleId);
+
+            builder.HasData(FakeDataFactory.Employees);
         });
 
         modelBuilder.Entity<Role>(builder =>
@@ -48,6 +51,8 @@ public class PromoCodeDbContext(DbContextOptions options) : DbContext(options)
             builder.Property(x => x.Description)
                 .IsRequired()
                 .HasMaxLength(225);
+
+            builder.HasData(FakeDataFactory.Roles);
         });
 
         modelBuilder.Entity<Customer>(builder =>
@@ -59,8 +64,7 @@ public class PromoCodeDbContext(DbContextOptions options) : DbContext(options)
                 .HasMaxLength(225);
 
             builder.Property(x => x.LastName)
-                .IsRequired()
-                .HasMaxLength(225);
+                .HasMaxLength(500);
 
             builder.Property(x => x.Email)
                 .HasMaxLength(320);
@@ -72,6 +76,8 @@ public class PromoCodeDbContext(DbContextOptions options) : DbContext(options)
 
             builder.HasMany(x => x.PromoCode)
                 .WithOne();
+
+            builder.HasData(FakeDataFactory.Customers);
         });
 
         modelBuilder.Entity<Preference>(builder =>
@@ -81,6 +87,8 @@ public class PromoCodeDbContext(DbContextOptions options) : DbContext(options)
             builder.Property(x => x.Name)
             .IsRequired()
             .HasMaxLength(225);
+
+            builder.HasData(FakeDataFactory.Preferences);
         });
 
         modelBuilder.Entity<PromoCode>(builder =>

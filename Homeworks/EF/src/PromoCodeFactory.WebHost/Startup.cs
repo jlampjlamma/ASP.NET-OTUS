@@ -82,17 +82,13 @@ namespace PromoCodeFactory.WebHost
 
         public void InitializeDatabase(PromoCodeDbContext context)
         {
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            //context.Database.EnsureDeleted();
+            //context.Database.EnsureCreated();
 
-            //context.Roles.AddRange(FakeDataFactory.Roles);
+            //context.Employees.AddRange(FakeDataFactory.Employees);
             //context.Customers.AddRange(FakeDataFactory.Customers);
+            //context.Preferences.AddRange(FakeDataFactory.Preferences);
             //context.SaveChanges();
-
-            context.Employees.AddRange(FakeDataFactory.Employees);
-            context.Customers.AddRange(FakeDataFactory.Customers);
-            context.Preferences.AddRange(FakeDataFactory.Preferences);
-            context.SaveChanges();
         }
     }
 }
