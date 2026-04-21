@@ -1,7 +1,12 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Homeworks",
+    "\\Homeworks\\EF",
+    "\\Homeworks\\EF\\src",
+    "\\Homeworks\\EF\\src\\PromoCodeFactory.DataAccess",
+    "\\Homeworks\\EF\\src\\PromoCodeFactory.DataAccess\\Repositories"
   ],
-  "SelectedNode": "\\C:\\Projects\\aspOtus\\Homework\\ASP.NET-OTUS",
+  "SelectedNode": "\\Homeworks\\EF\\src\\PromoCodeFactory.DataAccess\\Repositories\\BaseRepository.cs",
   "PreviewInSolutionExplorer": false
 }
