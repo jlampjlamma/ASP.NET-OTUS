@@ -22,7 +22,7 @@ jobs:
       run: dotnet restore Homeworks/UnitTests/src/PromoCodeFactory.UnitTests/PromoCodeFactory.WebHost.Tests.csproj
 
     - name: Build
-      run: dotnet build Homeworks/UnitTests/src/PromoCodeFactory.UnitTests/PromoCodeFactory.WebHost.Tests.csproj --no-restore
+      run: dotnet build Homeworks/UnitTests/src/PromoCodeFactory.UnitTests/PromoCodeFactory.UnitTests.csproj --no-restore
 
     - name: Run Tests
-      run: dotnet test Homeworks/UnitTests/src/PromoCodeFactory.UnitTests/PromoCodeFactory.WebHost.Tests.csproj --no-build --verbosity normal --logger "console;verbosity=detailed"
+      run: dotnet test Homeworks/UnitTests/src/PromoCodeFactory.UnitTests/PromoCodeFactory.UnitTests.csproj --no-build --verbosity normal --logger "console;verbosity=detailed"
