@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PromoCodeFactory.Core.Domain.PromoCodeManagement
 {
@@ -15,6 +16,9 @@ namespace PromoCodeFactory.Core.Domain.PromoCodeManagement
         public DateTime? CancelDate { get; set; }
 
         public DateTime EndDate { get; set; }
+
+        [NotMapped]
+        public bool IsActive => !CancelDate.HasValue && EndDate > DateTime.Now;
 
         public int Limit { get; set; }
     }

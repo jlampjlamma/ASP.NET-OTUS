@@ -2,11 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\Homeworks",
-    "\\Homeworks\\EF",
     "\\Homeworks\\EF\\src",
-    "\\Homeworks\\EF\\src\\PromoCodeFactory.DataAccess",
-    "\\Homeworks\\EF\\src\\PromoCodeFactory.DataAccess\\Repositories"
+    "\\Homeworks\\EF\\src\\PromoCodeFactory.DataAccess\\Repositories",
+    "\\Homeworks\\UnitTests",
+    "\\Homeworks\\UnitTests\\src"
   ],
-  "SelectedNode": "\\Homeworks\\EF\\src\\PromoCodeFactory.DataAccess\\Repositories\\BaseRepository.cs",
+  "SelectedNode": "\\Homeworks\\UnitTests\\src\\PromoCodeFactory.sln",
   "PreviewInSolutionExplorer": false
 }
