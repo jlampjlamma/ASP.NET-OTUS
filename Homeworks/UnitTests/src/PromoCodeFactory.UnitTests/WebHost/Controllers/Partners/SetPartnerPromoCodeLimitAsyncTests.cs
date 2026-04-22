@@ -41,14 +41,6 @@ namespace PromoCodeFactory.UnitTests.WebHost.Controllers.Partners
                 EndDate = DateTime.UtcNow.AddMonths(1)
             };
 
-
-        private Partner CreateNotActivePartner(Guid id) =>
-            _fixture.Build<Partner>()
-            .With(p => p.Id, id)
-            .With(p => p.IsActive, false)
-            .Without(p => p.PartnerLimits)
-            .Create();
-
         public static IEnumerable<object[]> GetInvalidRequests()
         {
             yield return new object[]
@@ -94,7 +86,11 @@ namespace PromoCodeFactory.UnitTests.WebHost.Controllers.Partners
         {
             //arrange
             var testId = Guid.NewGuid();
-            var partner = CreateNotActivePartner(testId);
+            var partner = _fixture.Build<Partner>()
+                .With(p => p.Id, testId)
+                .With(p => p.IsActive, false)
+                .Without(p => p.PartnerLimits)
+                .Create();
 
             _repositoryMock
                 .Setup(r => r.GetByIdAsync(It.IsAny<Guid>()))
@@ -123,7 +119,11 @@ namespace PromoCodeFactory.UnitTests.WebHost.Controllers.Partners
         {
             //arrange
             var testId = Guid.NewGuid();
-            var partner = CreateNotActivePartner(testId);
+            var partner = _fixture.Build<Partner>()
+                .With(p => p.Id, testId)
+                .With(p => p.IsActive, true)
+                .Without(p => p.PartnerLimits)
+                .Create();
 
             _repositoryMock
                 .Setup(r => r.GetByIdAsync(It.IsAny<Guid>()))
@@ -147,10 +147,10 @@ namespace PromoCodeFactory.UnitTests.WebHost.Controllers.Partners
         public async Task SetPartnerPromoCodeLimitAsync_WhenNoActiveLimit_CreatesNewLimitAndPreservesCounter()
         {
             //arrange
-            var partnerId = Guid.NewGuid();
+            var testId = Guid.NewGuid();
             var initialCounter = 15;
             var partner = _fixture.Build<Partner>()
-                .With(p => p.Id, partnerId)
+                .With(p => p.Id, testId)
                 .With(p => p.IsActive, true)
                 .With(p => p.NumberIssuedPromoCodes, initialCounter)
                 .With(p => p.PartnerLimits, new List<PartnerPromoCodeLimit>())
@@ -164,7 +164,7 @@ namespace PromoCodeFactory.UnitTests.WebHost.Controllers.Partners
             var controller = _fixture.Create<PartnersController>();
 
             //act
-            var result = await controller.SetPartnerPromoCodeLimitAsync(partnerId, request);
+            var result = await controller.SetPartnerPromoCodeLimitAsync(testId, request);
 
             //assert
             result.Should().BeOfType<CreatedAtActionResult>()
