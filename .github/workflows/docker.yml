@@ -4,8 +4,8 @@ on:
   push:
     branches: [ main, master ]
     paths:
-      - '**/docker-compose.yml'
-      - '**/init-db/**'
+      - 'Homeworks/Docker/docker-compose.yml'
+      - 'Homeworks/Docker/init-db/**'
       - '.github/workflows/docker-ci.yml'
   workflow_dispatch:
 
