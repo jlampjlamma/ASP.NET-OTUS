@@ -34,7 +34,7 @@ jobs:
           echo "Error: PostgreSQL did not become ready after 30 attempts."
           exit 1
           
-      - name: Verify migration: check for expected tables
+      - name: Verify migration check for expected tables
         run: |
           echo "Checking for expected tables..."
           TABLES=$(docker compose exec db psql -U user -d homework -t -c "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';")
