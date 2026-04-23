@@ -3,7 +3,7 @@ name: Run Tests
 on:
   push:
     branches: [ "main" ] 
-     paths:
+    paths:
       - 'Homeworks/UnitTests/src/PromoCodeFactory.UnitTests/**'
       - '.github/workflows/tests.yml'
   workflow_dispatch:
