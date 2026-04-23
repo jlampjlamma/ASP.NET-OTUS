@@ -26,16 +26,18 @@ jobs:
           for i in {1..30}; do
             if docker compose exec db pg_isready -U user -d homework; then
               echo "PostgreSQL is ready!"
-              break
+              exit 0
             fi
             echo "Attempt $i: waiting..."
             sleep 2
           done
+          echo "Error: PostgreSQL did not become ready after 30 attempts."
+          exit 1
           
       - name: Verify migration: check for expected tables
         run: |
           echo "Checking for expected tables..."
-          TABLES=$(docker compose exec db psql -U user -d homework -t -c \
+          TABLES=$(docker compose exec db psql -U user -d homework -t -c
             "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';")
           
           if echo "$TABLES" | grep -q "users" && echo "$TABLES" | grep -q "tasks"; then
