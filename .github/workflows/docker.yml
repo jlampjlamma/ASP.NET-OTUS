@@ -37,8 +37,7 @@ jobs:
       - name: Verify migration: check for expected tables
         run: |
           echo "Checking for expected tables..."
-          TABLES=$(docker compose exec db psql -U user -d homework -t -c
-            "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';")
+          TABLES=$(docker compose exec db psql -U user -d homework -t -c "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';")
           
           if echo "$TABLES" | grep -q "users" && echo "$TABLES" | grep -q "tasks"; then
             echo "Migration successful: tables 'users' and 'tasks' exist"
