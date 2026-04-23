@@ -18,13 +18,15 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Start PostgreSQL via Docker Compose
-        run: docker compose up -d
+        run: |
+          cd Homeworks/Docker
+          docker compose up -d
 
       - name: Wait for DB readiness
         run: |
           echo "Waiting for PostgreSQL to be ready..."
           for i in {1..30}; do
-            if docker compose exec db pg_isready -U user -d homework; then
+            if docker compose -f Homeworks/Docker/docker-compose.yml exec db pg_isready -U user -d homework; then
               echo "PostgreSQL is ready!"
               exit 0
             fi
@@ -34,10 +36,10 @@ jobs:
           echo "Error: PostgreSQL did not become ready after 30 attempts."
           exit 1
           
-      - name: Verify migration check for expected tables
+      - name: "Verify migration: check for expected tables"
         run: |
           echo "Checking for expected tables..."
-          TABLES=$(docker compose exec db psql -U user -d homework -t -c "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';")
+          TABLES=$(docker compose -f Homeworks/Docker/docker-compose.yml exec db psql -U user -d homework -t -c "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';")
           
           if echo "$TABLES" | grep -q "users" && echo "$TABLES" | grep -q "tasks"; then
             echo "Migration successful: tables 'users' and 'tasks' exist"
@@ -49,8 +51,8 @@ jobs:
           fi
 
       - name: Show tables (for logging)
-        run: docker compose exec db psql -U user -d homework -c "\dt"
+        run: docker compose -f Homeworks/Docker/docker-compose.yml exec db psql -U user -d homework -c "\dt"
 
       - name: Cleanup resources
         if: always()
-        run: docker compose down -v
+        run: docker compose -f Homeworks/Docker/docker-compose.yml down -v
