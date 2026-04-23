@@ -2,11 +2,11 @@ name: Docker Homework CI
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ "main" ]
     paths:
       - 'Homeworks/Docker/docker-compose.yml'
       - 'Homeworks/Docker/init-db/**'
-      - '.github/workflows/docker-ci.yml'
+      - '.github/workflows/docker.yml'
   workflow_dispatch:
 
 jobs:
