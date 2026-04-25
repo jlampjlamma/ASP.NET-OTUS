@@ -1,0 +1,71 @@
+:root {
+  /* Тёмная тема — всегда */
+  --text: #e5e7eb;           /* Светло-серый для основного текста */
+  --text-h: #f9fafb;         /* Почти белый для заголовков */
+  --text-dim: #9ca3af;       /* Приглушённый для второстепенного */
+  
+  --bg: #0f1115;             /* Глубокий тёмный фон */
+  --bg-card: #1e2128;        /* Фон карточек/блоков */
+  --bg-hover: #2a2f3a;       /* Фон при наведении */
+  
+  --border: #374151;         /* Границы */
+  --accent: #8b5cf6;         /* Акцент (фиолетовый) */
+  --accent-hover: #7c3aed;   /* Акцент при наведении */
+  --error: #ef4444;          /* Ошибки */
+  
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, 'Consolas', 'Monaco', monospace;
+  
+  color-scheme: dark;        /* Сообщаем браузеру: только тёмная тема */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+h1, h2, h3 {
+  color: var(--text-h);
+  font-weight: 600;
+  margin: 0 0 0.5em;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--accent-hover);
+}
+
+code {
+  font-family: var(--font-mono);
+  background: var(--bg-card);
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  color: var(--text-h);
+}
