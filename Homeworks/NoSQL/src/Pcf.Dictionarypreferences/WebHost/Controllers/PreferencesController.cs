@@ -80,6 +80,30 @@ namespace WebHost.Controllers
             return preference is null ? NotFound() : Ok(preference);
         }
 
+        [HttpPost("by-ids")]
+        public async Task<ActionResult<IEnumerable<Preference>>> GetPreferencesByIds(
+    [FromBody] List<Guid> ids,
+    CancellationToken ct = default)
+        {
+            if (ids == null || ids.Count == 0)
+                return BadRequest("Список идентификаторов не может быть пустым");
+
+            var sortedIds = ids.Distinct().OrderBy(x => x).ToList();
+            var cacheKey = $"preferences:batch:{string.Join(",", sortedIds)}";
+
+            var preferences = await _cache.GetOrCreateAsync(
+                key: cacheKey,
+                factory: async ct => await _context.Preferences
+                    .AsNoTracking()
+                    .Where(p => sortedIds.Contains(p.Id))
+                    .ToListAsync(ct),
+                tags: ["preferences"],
+                cancellationToken: ct
+            );
+
+            return Ok(preferences);
+        }
+
         /// <summary>
         /// Изменить предпочтение по идентификатору
         /// </summary>

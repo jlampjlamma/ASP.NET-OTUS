@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Pcf.ReceivingFromPartner.Core.Abstractions.Gateways;
 using Pcf.ReceivingFromPartner.Core.Abstractions.Repositories;
 using Pcf.ReceivingFromPartner.Core.Domain;
 using Pcf.ReceivingFromPartner.WebHost.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Pcf.ReceivingFromPartner.WebHost.Controllers
 {
@@ -17,11 +18,13 @@ namespace Pcf.ReceivingFromPartner.WebHost.Controllers
     public class PreferencesController
         : ControllerBase
     {
-        private readonly IRepository<Preference> _preferencesRepository;
+        //private readonly IRepository<Preference> _preferencesRepository;
+        private readonly IDictionaryPreferencesGeteway _preferencesGeteway;
 
-        public PreferencesController(IRepository<Preference> preferencesRepository)
+        //public PreferencesController(IRepository<Preference> preferencesRepository)
+        public PreferencesController(IDictionaryPreferencesGeteway preferencesGeteway)
         {
-            _preferencesRepository = preferencesRepository;
+            _preferencesGeteway = preferencesGeteway;
         }
         
         /// <summary>
@@ -31,7 +34,7 @@ namespace Pcf.ReceivingFromPartner.WebHost.Controllers
         [HttpGet]
         public async Task<ActionResult<List<PreferenceResponse>>> GetPreferencesAsync()
         {
-            var preferences = await _preferencesRepository.GetAllAsync();
+            var preferences = await _preferencesGeteway.GetAllPreferences();
 
             var response = preferences.Select(x => new PreferenceResponse()
             {

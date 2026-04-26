@@ -2,6 +2,7 @@
 using Pcf.GivingToCustomer.Core.Domain;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -33,5 +34,16 @@ public class DictionaryPreferencesGeteway : IDictionaryPreferencesGeteway
     {
         var response = await _httpClient.GetFromJsonAsync<Preference>($"api/preferences/name?name={name}");
         return response ?? new();
+    }
+
+    public async Task<List<Preference>> GetPreferencesByIds(IEnumerable<Guid> ids)
+    {
+        var response = await _httpClient.PostAsJsonAsync(
+                "api/preferences/by-ids",
+                ids.ToList());
+
+        response.EnsureSuccessStatusCode();
+
+        return await response.Content.ReadFromJsonAsync<List<Preference>>() ?? new();
     }
 }
