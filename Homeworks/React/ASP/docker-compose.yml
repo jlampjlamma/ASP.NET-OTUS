@@ -1,0 +1,29 @@
+services:
+  api:
+    build:
+      context: ./RestApi
+      dockerfile: Dockerfile
+    container_name: joke-api
+    ports:
+      - "8080:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - AllowedOrigins=http://localhost:3000,http://localhost:5173
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./JokeWeather
+      dockerfile: Dockerfile
+    container_name: joke-front
+    ports:
+      - "3000:80"
+    depends_on:
+      - api
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

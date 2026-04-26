@@ -10,7 +10,8 @@ interface JokeWeather {
   forecastPhrase: string;
 }
 
-const API_URL = 'https://localhost:7112/api/jokeweather'
+const API_BASE = import.meta.env.API_URL || 'http://localhost:8080';
+const API_URL = `${API_BASE}/api/jokeweather`;
 
 function App() {
   const [weather, setWeather] = useState<JokeWeather | null>(null)

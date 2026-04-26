@@ -4,4 +4,5 @@
     <Deploy />
   </Project>
   <Project Path="ASP.Server/ASP.Server.csproj" />
+  <Project Path="RestApi/RestApi.csproj" Id="ad966e0f-b8cc-4689-9a37-e053c0d2bd53" />
 </Solution>

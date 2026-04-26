@@ -63,3 +63,27 @@ services:
       - "ConnectionStrings:PromocodeFactoryGivingToCustomerDb=Host=promocode-factory-giving-to-customer-db;Database=promocode_factory_giving_to_customer_db;Username=postgres;Password=docker"          
     depends_on: 
       - promocode-factory-giving-to-customer-db
+  
+  promocode-factory-directory-preferences-db:
+    image: "postgres:latest"
+    container_name: 'promocode-factory-directory-preferences-db'
+    restart: always 
+    ports:
+      - 5436:5432
+    environment: 
+      - POSTGRES_PASSWORD=docker       
+      
+  mongodb:
+    image: mongo:7
+    container_name: pcf-mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password123
+
+  redis:
+    image: redis:7-alpine
+    container_name: pcf-redis
+    ports:
+      - "6379:6379"

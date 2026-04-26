@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Pcf.GivingToCustomer.Core.Abstractions.Gateways;
 using Pcf.GivingToCustomer.Core.Abstractions.Repositories;
 using Pcf.GivingToCustomer.Core.Domain;
 using Pcf.GivingToCustomer.WebHost.Mappers;
@@ -19,15 +20,19 @@ namespace Pcf.GivingToCustomer.WebHost.Controllers
         : ControllerBase
     {
         private readonly IRepository<PromoCode> _promoCodesRepository;
-        private readonly IRepository<Preference> _preferencesRepository;
+        //private readonly IRepository<Preference> _preferencesRepository;
         private readonly IRepository<Customer> _customersRepository;
+        private readonly IDictionaryPreferencesGeteway _preferencesGeteway;
 
         public PromocodesController(IRepository<PromoCode> promoCodesRepository, 
-            IRepository<Preference> preferencesRepository, IRepository<Customer> customersRepository)
+            //IRepository<Preference> preferencesRepository, 
+            IRepository<Customer> customersRepository,
+            IDictionaryPreferencesGeteway preferencesGeteway)
         {
             _promoCodesRepository = promoCodesRepository;
-            _preferencesRepository = preferencesRepository;
+            //_preferencesRepository = preferencesRepository;
             _customersRepository = customersRepository;
+            _preferencesGeteway = preferencesGeteway;
         }
         
         /// <summary>
@@ -60,7 +65,7 @@ namespace Pcf.GivingToCustomer.WebHost.Controllers
         public async Task<IActionResult> GivePromoCodesToCustomersWithPreferenceAsync(GivePromoCodeRequest request)
         {
             //Получаем предпочтение по имени
-            var preference = await _preferencesRepository.GetByIdAsync(request.PreferenceId);
+            var preference = await _preferencesGeteway.GetPreferenceById(request.PreferenceId);
 
             if (preference == null)
             {

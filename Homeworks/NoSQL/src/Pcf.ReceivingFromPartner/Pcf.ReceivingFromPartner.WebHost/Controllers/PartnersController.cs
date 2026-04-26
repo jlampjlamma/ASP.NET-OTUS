@@ -20,22 +20,22 @@ using Microsoft.AspNetCore.Mvc;
         : ControllerBase
     {
         private readonly IRepository<Partner> _partnersRepository;
-        private readonly IRepository<Preference> _preferencesRepository;
         private readonly INotificationGateway _notificationGateway;
         private readonly IGivingPromoCodeToCustomerGateway _givingPromoCodeToCustomerGateway;
         private readonly IAdministrationGateway _administrationGateway;
+        private readonly IDictionaryPreferencesGeteway _preferencesGeteway;
 
         public PartnersController(IRepository<Partner> partnersRepository,
-            IRepository<Preference> preferencesRepository, 
             INotificationGateway notificationGateway,
             IGivingPromoCodeToCustomerGateway givingPromoCodeToCustomerGateway,
-            IAdministrationGateway administrationGateway)
+            IAdministrationGateway administrationGateway,
+            IDictionaryPreferencesGeteway preferencesGeteway)
         {
             _partnersRepository = partnersRepository;
-            _preferencesRepository = preferencesRepository;
             _notificationGateway = notificationGateway;
             _givingPromoCodeToCustomerGateway = givingPromoCodeToCustomerGateway;
             _administrationGateway = administrationGateway;
+            _preferencesGeteway = preferencesGeteway;
         }
 
         /// <summary>
@@ -316,8 +316,8 @@ using Microsoft.AspNetCore.Mvc;
                 return BadRequest("Данный промокод уже был выдан ранее");
             }
 
-            //Получаем предпочтение по имени
-            var preference = await _preferencesRepository.GetByIdAsync(request.PreferenceId);
+            //Получаем предпочтение по имени (а почему по guid?)
+            var preference = await _preferencesGeteway.GetPreferenceById(request.PreferenceId);
 
             if (preference == null)
             {

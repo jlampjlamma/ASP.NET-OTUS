@@ -46,6 +46,11 @@ namespace Pcf.GivingToCustomer.WebHost
                 x.UseLazyLoadingProxies();
             });
 
+            services.AddHttpClient<IDictionaryPreferencesGeteway, DictionaryPreferencesGeteway>(c =>
+            {
+                c.BaseAddress = new Uri(Configuration["IntegrationSettings:PreferenceApiUrl"]);
+            });
+
             services.AddOpenApiDocument(options =>
             {
                 options.Title = "PromoCode Factory Giving To Customer API Doc";
